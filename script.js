@@ -6,17 +6,36 @@ const VoiceRSS={speech:function(e){this._validate(e),this._request(e)},_validate
 
 
 
-function test(){
-  VoiceRSS.speech({
-            key: '9a4806a2654743588f1021ad591c2e3b',
-            src: 'Hello, world!',
-            hl: 'en-us',
-            v: 'Linda',
-            r: 0,
-            c: 'mp3',
-            f: '44khz_16bit_stereo',
-            ssml: false
-        });
-}
+// function test(){
+//   VoiceRSS.speech({
+//             key: '9a4806a2654743588f1021ad591c2e3b',
+//             src: 'Hello, world!',
+//             hl: 'en-us',
+//             v: 'Linda',
+//             r: 0,
+//             c: 'mp3',
+//             f: '44khz_16bit_stereo',
+//             ssml: false
+//         });
+// }
+//
+// test();
 
-test();
+// Get jokes from joke api
+async function getJokes(){
+  let joke = '';
+  const apiUrl = 'https://sv443.net/jokeapi/v2/joke/Programming,Miscellaneous?blacklistFlags=nsfw,religious,racist,sexist'
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    if(data.setup){
+      joke = `${data.setup} ... ${data.delivery}`;
+    } else {
+      joke = data.joke;
+    }
+    console.log(joke);
+  } catch(error){
+    console.log('Whoops', error);
+  }
+}
+getJokes();
